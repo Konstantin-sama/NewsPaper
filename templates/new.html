@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<h1>Название - {{ object.title| Censor }}</h1>
+<p>Текст - {{ object.text | Censor}}</p>
+<p>Автор - {{ object.Author.userName }}</p>
+<p>Тип - {{ object.get_categoryType_display }}</p>
+<h5> Подписка на все категории новостей: </h5>
+{% if object.postCategory.all %}
+{% for cat in object.postCategory.all %}
+
+<button><a href="{% url 'add_subscribe' cat.id %}">{{ cat.name }}</a></button>
+{% endfor %}
+{% else %}
+У новости нет категорий
+{% endif %}
+<p>Рейтинг - {{ object.rating }}</p>
+<p>Дата загрузки - {{ object.dateCreation }}</p>
+
+<a href="{% url 'post_update' object.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
+<a href="{% url 'post_delete' object.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление товара-->
+
+{% endblock content %}
