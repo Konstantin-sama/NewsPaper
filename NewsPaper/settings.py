@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 # Импортировать пакет psycopg2
-import psycopg2
+# import psycopg2
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -131,9 +131,17 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     },
 }
+
+# python manage.py dumpdata --format=json > mydata.json
+# python manage.py dumpdata --format=xml > mydata.xml
+# python manage.py flush
+# python manage.py loaddata mydata.json
+
+# python manage.py dumpdata --format=xml sampleapp > sampledata.xml
+# python manage.py flush --sampleapp
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -248,46 +256,46 @@ CELERY_RESULT_SERIALIZER = 'json'
 # news
 SITE_URL = 'http://127.0.0.1:8000'
 
-# Открыть подключение к базе.
-# Обратите внимание на синтаксис строки с информацией о БД:
-# если вы меняли настройки своей БД, то и здесь им придётся
-# указать соответствующие.
-# Кстати, таких подключений можно открывать сколько угодно:
-# вдруг у вашего приложения данные распределены
-# по нескольким базам?
-conn = psycopg2.connect("dbname=postgres user=postgres")
-
-# Создать «курсор» на подключении к базе.
-# Курсоры используются для представления
-# сессий подключения к БД.
-cur = conn.cursor()
-
-# Выполнить команду напрямую.
-cur.execute(
-    "CREATE TABLE test (id serial PRIMARY KEY, num integer, data varchar);"
-)
-
-# Выполнить команду, не заботясь о корректном синтаксисе
-# представления данных: psycopg2 всё сделает за нас.
-cur.execute(
-    "INSERT INTO test (num, data) VALUES (%s, %s)",
-    (100, "abc'def")
-)
-
-# Выполнить команду
-cur.execute("SELECT * FROM test;")
-# Но как получить результат её выполнения?..
-
-# А вот так. fetchone — «принести» одну строчку результата,
-# fetchall — все строчки.
-cur.fetchone()
-
-# Завершить транзакцию
-conn.commit()
-# Закрыть курсор
-cur.close()
-# Закрыть подключение
-conn.close()
+# # Открыть подключение к базе.
+# # Обратите внимание на синтаксис строки с информацией о БД:
+# # если вы меняли настройки своей БД, то и здесь им придётся
+# # указать соответствующие.
+# # Кстати, таких подключений можно открывать сколько угодно:
+# # вдруг у вашего приложения данные распределены
+# # по нескольким базам?
+# conn = psycopg2.connect("dbname=postgres user=postgres")
+#
+# # Создать «курсор» на подключении к базе.
+# # Курсоры используются для представления
+# # сессий подключения к БД.
+# cur = conn.cursor()
+#
+# # Выполнить команду напрямую.
+# cur.execute(
+#     "CREATE TABLE test (id serial PRIMARY KEY, num integer, data varchar);"
+# )
+#
+# # Выполнить команду, не заботясь о корректном синтаксисе
+# # представления данных: psycopg2 всё сделает за нас.
+# cur.execute(
+#     "INSERT INTO test (num, data) VALUES (%s, %s)",
+#     (100, "abc'def")
+# )
+#
+# # Выполнить команду
+# cur.execute("SELECT * FROM test;")
+# # Но как получить результат её выполнения?..
+#
+# # А вот так. fetchone — «принести» одну строчку результата,
+# # fetchall — все строчки.
+# cur.fetchone()
+#
+# # Завершить транзакцию
+# conn.commit()
+# # Закрыть курсор
+# cur.close()
+# # Закрыть подключение
+# conn.close()
 
 # Стандартную конфигурацию логирования можно переопределить,
 # добавляя соответствующие настройки в файл settings.py.
