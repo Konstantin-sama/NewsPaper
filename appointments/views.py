@@ -66,9 +66,9 @@ class AppointmentView(View):
             subject=f'{appointment.client_name} {appointment.date.strftime("%Y-%M-%d")}',
             # имя клиента и дата записи будут в теме для удобства
             message=appointment.message,  # сообщение с кратким описанием проблемы
-            from_email='Konstantin-sama@yandex.ru',
+            from_email='a@yandex.ru',
             # здесь указываете почту, с которой будете отправлять (об этом попозже)
-            recipient_list=['kalinkinkonstantin00@gmail.com']
+            recipient_list=['0@gmail.com']
             # здесь список получателей. Например, секретарь, сам врач и т. д.
         )
         # получаем наш html
@@ -83,8 +83,8 @@ class AppointmentView(View):
         msg = EmailMultiAlternatives(
             subject=f'{appointment.client_name} {appointment.date.strftime("%Y-%M-%d")}',
             body=appointment.message,  # это то же, что и message
-            from_email='Konstantin-sama@yandex.ru',
-            to=['kalinkinkonstantin00@gmail.com'],  # это то же, что и recipients_list
+            from_email='a@yandex.ru',
+            to=['0@gmail.com'],  # это то же, что и recipients_list
         )
         msg.attach_alternative(html_content, "text/html")  # добавляем html
         msg.send()  # отсылаем
